@@ -82,13 +82,8 @@ public class UserServiceImpl implements UsersService {
 			throw new UsernameNotFoundException("User not found");
 		UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 		
-		List<AlbumResponseModel> albumsList = null;
-		try {
-			albumsList = albumsServiceClient.getAlbums(userId);
-		} catch (FeignException e) {
-			// TODO Auto-generated catch block
-			logger.error(e.getLocalizedMessage());
-		}
+		List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
+		
 		userDto.setAlbums(albumsList);
 		return userDto;
 	}
