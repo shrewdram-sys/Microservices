@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.app.photoapp.albums.PhotoAppApiAlbums.service;
+package com.app.photoapp.albums.service;
 
 
 import java.util.List;
 
-import com.app.photoapp.albums.PhotoAppApiAlbums.data.AlbumEntity;
+import com.app.photoapp.albums.data.AlbumEntity;
 
 public interface AlbumsService {
     List<AlbumEntity> getAlbums(String userId);

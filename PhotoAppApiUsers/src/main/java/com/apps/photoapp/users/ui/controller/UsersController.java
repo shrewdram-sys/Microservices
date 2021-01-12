@@ -49,8 +49,8 @@ public class UsersController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
 	}
 
-	@PostMapping(value = "/{userId}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<UserResponseModel> createUser(@PathVariable("userId") String userId) {
+	@GetMapping(value = "/{userId}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserResponseModel> callAlbumsFeign(@PathVariable("userId") String userId) {
 		UserDto createdUser = usersService.getUserByUserId(userId);
 		UserResponseModel returnValue = new ModelMapper().map(createdUser, UserResponseModel.class);
 		return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);

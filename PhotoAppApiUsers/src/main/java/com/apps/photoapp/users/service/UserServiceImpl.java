@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +21,8 @@ import com.apps.photoapp.users.data.UsersRepository;
 import com.apps.photoapp.users.shared.UserDto;
 import com.apps.photoapp.users.ui.model.AlbumResponseModel;
 
+import feign.FeignException;
+
 @Service
 public class UserServiceImpl implements UsersService {
 
@@ -26,6 +30,8 @@ public class UserServiceImpl implements UsersService {
 
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 	AlbumsServiceClient albumsServiceClient;
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	public UserServiceImpl(UsersRepository usersRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
@@ -76,7 +82,13 @@ public class UserServiceImpl implements UsersService {
 			throw new UsernameNotFoundException("User not found");
 		UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 		
-		List<AlbumResponseModel> albumsList = albumsServiceClient.getAlbums(userId);
+		List<AlbumResponseModel> albumsList = null;
+		try {
+			albumsList = albumsServiceClient.getAlbums(userId);
+		} catch (FeignException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getLocalizedMessage());
+		}
 		userDto.setAlbums(albumsList);
 		return userDto;
 	}

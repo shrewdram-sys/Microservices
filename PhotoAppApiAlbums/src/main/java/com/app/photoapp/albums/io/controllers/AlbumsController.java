@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.app.photoapp.albums.PhotoAppApiAlbums.io.controllers;
+package com.app.photoapp.albums.io.controllers;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.photoapp.albums.PhotoAppApiAlbums.data.AlbumEntity;
-import com.app.photoapp.albums.PhotoAppApiAlbums.service.AlbumsService;
-import com.app.photoapp.albums.PhotoAppApiAlbums.ui.model.AlbumResponseModel;
+import com.app.photoapp.albums.data.AlbumEntity;
+import com.app.photoapp.albums.service.AlbumsService;
+import com.app.photoapp.albums.ui.model.AlbumResponseModel;
 import com.google.common.reflect.TypeToken;
 @RestController
 @RequestMapping("/users/{id}/albums")
@@ -46,7 +46,12 @@ public class AlbumsController {
             return returnValue;
         }
         
-        Type listType = new TypeToken<List<AlbumResponseModel>>(){}.getType();
+        Type listType = new TypeToken<List<AlbumResponseModel>>(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -5846249112756528815L;}.getType();
  
         returnValue = new ModelMapper().map(albumsEntities, listType);
         logger.info("Returning " + returnValue.size() + " albums");

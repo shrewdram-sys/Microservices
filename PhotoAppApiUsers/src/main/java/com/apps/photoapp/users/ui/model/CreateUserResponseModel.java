@@ -1,7 +1,5 @@
 package com.apps.photoapp.users.ui.model;
 
-import javax.persistence.Column;
-
 public class CreateUserResponseModel {
 
 	private String firstName;
